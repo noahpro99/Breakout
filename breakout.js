@@ -49,6 +49,22 @@ document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("touchmove", handleTouchmove, false);
 
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+     navigator.serviceWorker.register('../sw.js').then( () => {
+      console.log('Service Worker Registered')
+     })
+   })
+  }
+
+
+
+
+
+
+  
+
 function drawScore() {
     ctx.font = "bold 64px Arial";
     ctx.fillStyle = "#11abed";
