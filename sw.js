@@ -7,7 +7,7 @@ var URLS = [
   `${GH_PATH}/`,
   `${GH_PATH}/index.html`,
   `${GH_PATH}/css/style.css`,
-  `${GH_PATH}/icons/icon-512.png`,
+  `${GH_PATH}/images/icons/icon-512.png`,
   `${GH_PATH}/js/breakout.js`
 ]
 
