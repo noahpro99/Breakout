@@ -86,12 +86,18 @@ function keyUpHandler(e) {
     }
 }
 
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
 
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    
+    resizeCanvas();
+
     drawBall();
     drawPaddle();
     drawBricks();
