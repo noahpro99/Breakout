@@ -1,5 +1,5 @@
 {
-    "background_color": "#ffffff",
+    "background_color": "#373737",
     "description": "A Breakout Game",
     "dir": "ltr",
     "display": "fullscreen",
@@ -8,7 +8,7 @@
     "scope": "/Breakout/",
     "short_name": "Breakout",
     "start_url": "/Breakout/",
-    "theme_color": "#ffffff",
+    "theme_color": "#11abed",
     "categories": [],
     "screenshots": [
         {

@@ -5,7 +5,7 @@
 }
 
 body {
-    background: rgb(55, 55, 55);
+    background: #373737;
     overscroll-behavior-y: contain;
     overscroll-behavior-x: contain;
 }
