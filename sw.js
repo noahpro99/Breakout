@@ -1,60 +1,91 @@
-importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.0.0/workbox-sw.js");
+/*
+Copyright 2015, 2019, 2020, 2021 Google LLC. All Rights Reserved.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
 
-if (workbox) {
-    console.log("Yay! Workbox is loaded !");
-    workbox.precaching.precacheAndRoute([]);
+// Incrementing OFFLINE_VERSION will kick off the install event and force
+// previously cached resources to be updated from the network.
+// This variable is intentionally declared and unused.
+// Add a comment for your linter if you want:
+// eslint-disable-next-line no-unused-vars
+const OFFLINE_VERSION = 1;
+const CACHE_NAME = "offline";
+// Customize this with a different URL if needed.
+const OFFLINE_URL = "offline.html";
 
-    /*  cache images in the e.g others folder; edit to other folders you got
-    and config in the sw-config.js file
-    */
-    workbox.routing.registerRoute(
-        /(.*)others(.*)\.(?:png|gif|jpg)/,
-        new workbox.strategies.CacheFirst({
-            cacheName: "images",
-            plugins: [
-                new workbox.expiration.Plugin({
-                    maxEntries: 50,
-                    maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
-                })
-            ]
-        })
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
+      // Setting {cache: 'reload'} in the new request ensures that the
+      // response isn't fulfilled from the HTTP cache; i.e., it will be
+      // from the network.
+      await cache.add(new Request(OFFLINE_URL, { cache: "reload" }));
+    })()
+  );
+  // Force the waiting service worker to become the active service worker.
+  self.skipWaiting();
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    (async () => {
+      // Enable navigation preload if it's supported.
+      // See https://developers.google.com/web/updates/2017/02/navigation-preload
+      if ("navigationPreload" in self.registration) {
+        await self.registration.navigationPreload.enable();
+      }
+    })()
+  );
+
+  // Tell the active service worker to take control of the page immediately.
+  self.clients.claim();
+});
+
+self.addEventListener("fetch", (event) => {
+  // Only call event.respondWith() if this is a navigation request
+  // for an HTML page.
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      (async () => {
+        try {
+          // First, try to use the navigation preload response if it's
+          // supported.
+          const preloadResponse = await event.preloadResponse;
+          if (preloadResponse) {
+            return preloadResponse;
+          }
+
+          // Always try the network first.
+          const networkResponse = await fetch(event.request);
+          return networkResponse;
+        } catch (error) {
+          // catch is only triggered if an exception is thrown, which is
+          // likely due to a network error.
+          // If fetch() returns a valid HTTP response with a response code in
+          // the 4xx or 5xx range, the catch() will NOT be called.
+          console.log("Fetch failed; returning offline page instead.", error);
+
+          const cache = await caches.open(CACHE_NAME);
+          const cachedResponse = await cache.match(OFFLINE_URL);
+          return cachedResponse;
+        }
+      })()
     );
-    /* Make your JS and CSS âš¡ fast by returning the assets from the cache,
-     while making sure they are updated in the background for the next use.
-    */
-    workbox.routing.registerRoute(
-    // cache js, css, scc files
-        /.*\.(?:css|js|scss|)/,
-        // use cache but update in the background ASAP
-        new workbox.strategies.StaleWhileRevalidate({
-            // use a custom cache name
-            cacheName: "assets",
-        })
-    );
+  }
 
-    // cache google fonts
-    workbox.routing.registerRoute(
-        new RegExp("https://fonts.(?:googleapis|gstatic).com/(.*)"),
-        new workbox.strategies.CacheFirst({
-            cacheName: "google-fonts",
-            plugins: [
-                new workbox.cacheableResponse.Plugin({
-                    statuses: [0, 200],
-                }),
-            ],
-        })
-    );
-
-    // add offline analytics
-    workbox.googleAnalytics.initialize();
-
-    /* Install a new service worker and have it update
-   and control a web page as soon as possible
-    */
-
-    workbox.core.skipWaiting();
-    workbox.core.clientsClaim();
-
-} else {
-    console.log("Oops! Workbox didn't load ðŸ‘º");
-}
+  // If our if() condition is false, then this fetch handler won't
+  // intercept the request. If there are any other fetch handlers
+  // registered, they will get a chance to call event.respondWith().
+  // If no fetch handlers call event.respondWith(), the request
+  // will be handled by the browser as if there were no service
+  // worker involvement.
+});

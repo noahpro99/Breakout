@@ -50,14 +50,12 @@ document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("touchmove", handleTouchmove, false);
 
 
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-     navigator.serviceWorker.register('sw.js').then( () => {
-      console.log('Service Worker Registered')
-     })
-   })
-  }
 
+window.addEventListener("load", () => {
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js");
+    }
+});
 
 
 function drawScore() {
