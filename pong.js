@@ -29,7 +29,7 @@ var leftPressed = false;
 
 var brickWidth = 160;
 var brickHeight = 50;
-var brickPadding = 15;
+var brickPadding = 13;
 var brickOffsetTop = 100;
 var brickRowCount = 12;
 var brickColumnCount = 6;
