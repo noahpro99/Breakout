@@ -1,15 +1,16 @@
-var GHPATH = '/Breakout';
+var GH_PATH = '/Breakout';
 var APP_PREFIX = 'breakout_';
 var VERSION = 'version_002';
+var CACHE_NAME = APP_PREFIX + VERSION
+
 var URLS = [    
-  `${GHPATH}/`,
-  `${GHPATH}/index.html`,
-  `${GHPATH}/css/style.css`,
-  `${GHPATH}/icons/icon-512.png`,
-  `${GHPATH}/js/breakout.js`
+  `${GH_PATH}/`,
+  `${GH_PATH}/index.html`,
+  `${GH_PATH}/css/style.css`,
+  `${GH_PATH}/icons/icon-512.png`,
+  `${GH_PATH}/js/breakout.js`
 ]
 
-var CACHE_NAME = APP_PREFIX + VERSION
 self.addEventListener('fetch', function (e) {
   console.log('Fetch request : ' + e.request.url);
   e.respondWith(

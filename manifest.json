@@ -1,0 +1,48 @@
+{
+    "background_color": "#ffffff",
+    "description": "A Breakout Game",
+    "dir": "ltr",
+    "display": "fullscreen",
+    "name": "Breakout",
+    "orientation": "portrait",
+    "scope": "/Breakout/",
+    "short_name": "Breakout",
+    "start_url": "/Breakout/",
+    "theme_color": "#ffffff",
+    "categories": [],
+    "screenshots": [
+        {
+            "src": "/Breakout/images/screenshots/screenshot-1.png",
+            "sizes": "1280x800",
+            "type": "image/png"
+        },
+        {
+            "src": "/Breakout/images/screenshots/screenshot-2.png",
+            "sizes": "750x1334",
+            "type": "image/png"
+        }
+    ],
+    "icons": [
+        {
+            "src": "/Breakout/icons/icon-512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "/Breakout/icons/icon-192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/Breakout/icons/icon-144.png",
+            "type": "image/png",
+            "sizes": "144x144"
+        },
+        {
+            "src": "/Breakout/icons/icon-32.png",
+            "type": "image/png",
+            "sizes": "32x32"
+        }
+    ],
+    "shortcuts": []
+}
