@@ -13,8 +13,8 @@ var speedIncrement = 1.2;
 var dx = ballSpeed;
 var dy = -ballSpeed;
 
-var paddleHeight = 20;
-var paddleWidth = 200;
+var paddleHeight = 30;
+var paddleWidth = 250;
 var paddleX = (canvas.width - paddleWidth) / 2;
 
 var paddleSpeed = 12;
@@ -45,21 +45,13 @@ for (var c = 0; c < brickColumnCount; c++) {
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
-document.addEventListener("mousemove", mouseMoveHandler, false);
 document.addEventListener("touchmove", handleTouchmove, false);
 
 function drawScore() {
-    ctx.font = "bold 50px Arial";
+    ctx.font = "bold 64px Arial";
     ctx.fillStyle = "#000000";
     ctx.font
     ctx.fillText(`Score: ${score}`, scoreX, scoreY);
-}
-
-function drawStats() {
-    ctx.font = "bold 25px Arial";
-    ctx.fillStyle = "#000000";
-    ctx.font
-    ctx.fillText(`paddleX: ${paddleX}, canvas.leftOffset: ${canvas.offsetLeft}, offset width: ${canvas.offsetWidth}`, scoreX, scoreY + 800);
 }
 
 function drawBall() {
@@ -113,7 +105,7 @@ function collisionDetection() {
                 score++;
 
                 if (score == brickColumnCount * brickRowCount) {
-                    alert("YOU WIN, CONGRATULATIONS!");
+                    alert("You Win!");
                     document.location.reload();
                     clearInterval(interval); // Needed for Chrome to end game
                 }
@@ -138,37 +130,31 @@ function keyUpHandler(e) {
     }
 }
 
-function mouseMoveHandler(e) {
-    var relativeX = e.clientX - canvas.offsetLeft + canvas.width / 2;
-    score = paddleX;
-    if (relativeX > 0 && relativeX < canvas.width) {
-        paddleX = relativeX - paddleWidth / 2;
+
+function handleTouchmove(e) {
+    e.preventDefault(); // we don't want to scroll
+    var touch = e.touches[0];
+    var relativeX = touch.clientX / window.innerWidth * canvas.width;
+
+    paddleX = relativeX - paddleWidth / 2;
+    
+    if (paddleX < 0) {
+        paddleX = 0;
+    } 
+    else if (paddleX + paddleWidth > canvas.width) {
+        paddleX = canvas.width - paddleWidth;
     }
 }
 
-function handleTouchmove(event) {
-    event.preventDefault(); // we don't want to scroll
-    var touch = event.touches[0];
-    paddleX = touch.clientX - canvas.offsetLeft + canvas.width / 2 - paddleWidth / 2;
-    // score = touch.clientX;
-}
-
-function resizeCanvas() {
-    canvas.width = 1080;
-    canvas.height = 1920;
-}
 
 
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // resizeCanvas();
-
     drawBall();
     drawPaddle();
     drawScore();
-    drawStats();
     collisionDetection();
     drawBricks();
 
@@ -186,10 +172,9 @@ function draw() {
             dy = dy * speedIncrement;
         }
         else {
-            dy = -dy;
-            // alert("GAME OVER");
-            // document.location.reload();
-            // clearInterval(interval); // Needed for Chrome to end game
+            alert("GAME OVER");
+            document.location.reload();
+            clearInterval(interval); // Needed for Chrome to end game
         }
     }
 
