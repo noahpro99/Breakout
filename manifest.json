@@ -1,0 +1,28 @@
+{
+    "name": "Pong",
+    "short_name": "Pong",
+    "description": "Pong game for mobile users",
+    "prompt_message": "Add a Home screen icon",
+    "icons": [
+        {
+            "src": "icons/icon-32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/icon-144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "index.html",
+    "display": "fullscreen",
+    "orientation": "portrait",
+    "theme_color": "#11abed",
+    "background_color": "#323232"
+}
