@@ -46,12 +46,20 @@ for (var c = 0; c < brickColumnCount; c++) {
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("mousemove", mouseMoveHandler, false);
+document.addEventListener("touchmove", handleTouchmove, false);
 
 function drawScore() {
     ctx.font = "bold 50px Arial";
     ctx.fillStyle = "#000000";
     ctx.font
     ctx.fillText(`Score: ${score}`, scoreX, scoreY);
+}
+
+function drawStats() {
+    ctx.font = "bold 25px Arial";
+    ctx.fillStyle = "#000000";
+    ctx.font
+    ctx.fillText(`paddleX: ${paddleX}, canvas.leftOffset: ${canvas.offsetLeft}, offset width: ${canvas.offsetWidth}`, scoreX, scoreY + 800);
 }
 
 function drawBall() {
@@ -131,11 +139,18 @@ function keyUpHandler(e) {
 }
 
 function mouseMoveHandler(e) {
-    var relativeX = e.clientX - canvas.offsetLeft;
+    var relativeX = e.clientX - canvas.offsetLeft + canvas.width / 2;
     score = paddleX;
-    if(relativeX > 0 && relativeX < canvas.width) {
-        paddleX = relativeX - paddleWidth/2;
+    if (relativeX > 0 && relativeX < canvas.width) {
+        paddleX = relativeX - paddleWidth / 2;
     }
+}
+
+function handleTouchmove(event) {
+    event.preventDefault(); // we don't want to scroll
+    var touch = event.touches[0];
+    paddleX = touch.clientX - canvas.offsetLeft + canvas.width / 2 - paddleWidth / 2;
+    // score = touch.clientX;
 }
 
 function resizeCanvas() {
@@ -153,6 +168,7 @@ function draw() {
     drawBall();
     drawPaddle();
     drawScore();
+    drawStats();
     collisionDetection();
     drawBricks();
 
