@@ -19,7 +19,7 @@
             "type": "image/png"
         }
     ],
-    "start_url": "index.html",
+    "start_url": "/Breakout/index.html",
     "display": "fullscreen",
     "orientation": "portrait",
     "theme_color": "#11abed",
