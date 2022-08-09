@@ -1,5 +1,7 @@
 var canvas = document.getElementById("gameCanvas");
 var ctx = canvas.getContext("2d");
+canvas.width = 1080;
+canvas.height = 1920;
 
 var ballRadius = 10;
 
@@ -87,15 +89,15 @@ function keyUpHandler(e) {
 }
 
 function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = 1080;
+    canvas.height = 1920;
 }
 
 
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     resizeCanvas();
 
     drawBall();
