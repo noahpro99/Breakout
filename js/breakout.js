@@ -50,14 +50,6 @@ document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("touchmove", handleTouchmove, false);
 
 
-
-window.addEventListener("load", () => {
-    if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("/sw.js");
-    }
-});
-
-
 function drawScore() {
     ctx.font = "bold 64px Arial";
     ctx.fillStyle = "#11abed";
