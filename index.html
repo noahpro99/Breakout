@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE-edge">
+  <!-- <meta http-equiv="X-UA-Compatible" content="IE-edge"> -->
   <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
   <title>Breakout</title>
-  <link rel="manifest" href="./manifest.json" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="canonical" href="https://noahpro99.github.io/Breakout/" />
+  <link rel="manifest" href="/Breakout/manifest.webmanifest">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 
 
@@ -15,7 +16,17 @@
 
   <canvas id="gameCanvas"></canvas>
 
-  <script src="breakout.js"></script>
+  <script>
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.register(
+        '/Breakout/sw.js',
+        { scope: '/Breakout/' }
+      )
+    }
+  </script>
+
+  <script src="js/breakout.js"></script>
 
 </body>
+
 </html>

@@ -2,25 +2,26 @@
     "name": "Breakout",
     "short_name": "Breakout",
     "description": "Breakout game for mobile users",
+    "scope": "/Breakout/",
+    "start_url": "/Breakout/",
     "icons": [
         {
-            "src": "icons/icon-32.png",
+            "src": "/Breakout/icons/icon-32.png",
             "sizes": "32x32",
             "type": "image/png"
         },
         {
-            "src": "icons/icon-144.png",
+            "src": "/Breakout/icons/icon-144.png",
             "sizes": "144x144",
             "type": "image/png"
         },
         {
-            "src": "icons/icon-192.png",
+            "src": "/Breakout/icons/icon-192.png",
             "sizes": "192x192",
             "type": "image/png"
         }
     ],
-    "start_url": "/Breakout/index.html",
-    "display": "fullscreen",
+    "display": "standalone",
     "orientation": "portrait",
     "theme_color": "#11abed",
     "background_color": "#323232",
