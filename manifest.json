@@ -2,7 +2,6 @@
     "name": "Breakout",
     "short_name": "Breakout",
     "description": "Breakout game for mobile users",
-    "prompt_message": "Add a Home screen icon",
     "icons": [
         {
             "src": "icons/icon-32.png",

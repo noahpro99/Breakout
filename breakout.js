@@ -52,18 +52,13 @@ document.addEventListener("touchmove", handleTouchmove, false);
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-     navigator.serviceWorker.register('../sw.js').then( () => {
+     navigator.serviceWorker.register('sw.js').then( () => {
       console.log('Service Worker Registered')
      })
    })
   }
 
 
-
-
-
-
-  
 
 function drawScore() {
     ctx.font = "bold 64px Arial";
