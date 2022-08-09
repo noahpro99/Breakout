@@ -2,7 +2,7 @@
     "background_color": "#373737",
     "description": "A Breakout Game",
     "dir": "ltr",
-    "display": "fullscreen",
+    "display": "standalone",
     "name": "Breakout",
     "orientation": "portrait",
     "scope": "/Breakout/",
@@ -13,12 +13,7 @@
     "screenshots": [
         {
             "src": "/Breakout/images/screenshots/screenshot-1.png",
-            "sizes": "1280x800",
-            "type": "image/png"
-        },
-        {
-            "src": "/Breakout/images/screenshots/screenshot-2.png",
-            "sizes": "750x1334",
+            "sizes": "570x991",
             "type": "image/png"
         }
     ],
