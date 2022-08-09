@@ -8,19 +8,20 @@ var ballRadius = 30;
 var x = canvas.width / 2;
 var y = canvas.height - 30;
 
-var ballSpeed = 6;
-var speedIncrement = 1.2;
-var dx = ballSpeed;
-var dy = -ballSpeed;
+var ballStartSpeed = 6;
+var speedIncrement = 1;
+var dx = ballStartSpeed;
+var dy = -ballStartSpeed;
 
 var paddleHeight = 30;
 var paddleWidth = 250;
 var paddleX = (canvas.width - paddleWidth) / 2;
 
-var paddleSpeed = 12;
+var paddleSpeed = 16;
 var score = 0;
 var scoreX = 20;
 var scoreY = 60;
+var lives = 3;
 
 var rightPressed = false;
 var leftPressed = false;
@@ -28,9 +29,9 @@ var leftPressed = false;
 
 var brickWidth = 160;
 var brickHeight = 50;
-var brickPadding = 20;
+var brickPadding = 15;
 var brickOffsetTop = 100;
-var brickRowCount = 8;
+var brickRowCount = 12;
 var brickColumnCount = 6;
 var brickOffsetLeft = (canvas.width - (brickColumnCount * (brickWidth + brickPadding)) + brickPadding) / 2;
 
@@ -49,15 +50,21 @@ document.addEventListener("touchmove", handleTouchmove, false);
 
 function drawScore() {
     ctx.font = "bold 64px Arial";
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "#11abed";
     ctx.font
     ctx.fillText(`Score: ${score}`, scoreX, scoreY);
+}
+
+function drawLives() {
+    ctx.font = "bold 64px Arial";
+    ctx.fillStyle = "#11abed";
+    ctx.fillText("Lives: " + lives, canvas.width - 300, scoreY);
 }
 
 function drawBall() {
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-    ctx.fillStyle = "#0095DD";
+    ctx.fillStyle = "#11abed";
     ctx.fill();
     ctx.closePath();
 }
@@ -65,7 +72,7 @@ function drawBall() {
 function drawPaddle() {
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-    ctx.fillStyle = "#0095DD";
+    ctx.fillStyle = "#11abed";
     ctx.fill();
     ctx.closePath();
 }
@@ -84,7 +91,7 @@ function drawBricks() {
             bricks[c][r].y = brickY;
             ctx.beginPath();
             ctx.rect(brickX, brickY, brickWidth, brickHeight);
-            ctx.fillStyle = "#0095DD";
+            ctx.fillStyle = "#11abed";
             ctx.fill();
             ctx.closePath();
         }
@@ -107,7 +114,6 @@ function collisionDetection() {
                 if (score == brickColumnCount * brickRowCount) {
                     alert("You Win!");
                     document.location.reload();
-                    clearInterval(interval); // Needed for Chrome to end game
                 }
             }
         }
@@ -137,10 +143,10 @@ function handleTouchmove(e) {
     var relativeX = touch.clientX / window.innerWidth * canvas.width;
 
     paddleX = relativeX - paddleWidth / 2;
-    
+
     if (paddleX < 0) {
         paddleX = 0;
-    } 
+    }
     else if (paddleX + paddleWidth > canvas.width) {
         paddleX = canvas.width - paddleWidth;
     }
@@ -155,6 +161,7 @@ function draw() {
     drawBall();
     drawPaddle();
     drawScore();
+    drawLives();
     collisionDetection();
     drawBricks();
 
@@ -168,13 +175,33 @@ function draw() {
     else if (y + dy > canvas.height - ballRadius) {
         if (x > paddleX && x < paddleX + paddleWidth) {
             dy = -dy;
-            dx = dx * speedIncrement;
-            dy = dy * speedIncrement;
+
+            if (dy < 0) {
+                dy -= speedIncrement;
+            } else {
+                dy += speedIncrement;
+            }
+
+            if (dx < 0) {
+                dx -= speedIncrement;
+            } else {
+                dx += speedIncrement;
+            }
         }
         else {
-            alert("GAME OVER");
-            document.location.reload();
-            clearInterval(interval); // Needed for Chrome to end game
+            lives--;
+            if (!lives) {
+                alert("GAME OVER");
+                document.location.reload();
+            }
+            else {
+                x = canvas.width / 2;
+                y = canvas.height - 30;
+                dx = ballStartSpeed;
+                dy = -ballStartSpeed;
+                paddleX = (canvas.width - paddleWidth) / 2;
+
+            }
         }
     }
 
@@ -194,7 +221,9 @@ function draw() {
 
     x += dx;
     y += dy;
+
+    requestAnimationFrame(draw);
 }
 
+draw();
 
-var interval = setInterval(draw, 10);
