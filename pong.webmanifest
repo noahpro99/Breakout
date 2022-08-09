@@ -1,0 +1,16 @@
+{
+    "name": "Pong Simple by Noah",
+    "short_name": "Pong",
+    "description": "Pong game for mobile users",
+    "icons": [
+      {
+        "src": "icons/icon-32.png",
+        "sizes": "32x32",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "index.html",
+    "display": "fullscreen",
+    "theme_color": "#11abed",
+    "background_color": "#323232"
+  }
