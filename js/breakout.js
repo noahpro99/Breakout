@@ -140,7 +140,7 @@ function keyUpHandler(e) {
 
 
 function handleTouchmove(e) {
-    e.preventDefault(); // we don't want to scroll
+    // e.preventDefault(); // we don't want to scroll
     var touch = e.touches[0];
     var relativeX = touch.clientX / window.innerWidth * canvas.width;
 
